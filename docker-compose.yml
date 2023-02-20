@@ -16,4 +16,5 @@ services:
     volumes:
       - "./config:/usr/local/etc/janus"
       - "./sites-enabled:/etc/nginx/sites-enabled/"
+      - "/etc/letsencrypt/:/etc/letsencrypt/"
     restart: 'no'

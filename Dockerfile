@@ -166,6 +166,7 @@ EXPOSE 7089
 
 VOLUME /usr/local/etc/janus
 VOLUME /etc/nginx/sites-enabled
+VOLUME /etc/letsencrypt
 
 STOPSIGNAL SIGTERM
 COPY run.sh /run.sh
