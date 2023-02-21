@@ -6,8 +6,7 @@
 var janus = null;
 var sfutest = null;
 var opaqueId = "videoroomtest-"+Janus.randomString(12);
-var roomCapacity = 200;
-
+const roomCapacity = 200;
 var myroom = 1234;	// Demo room
 if(getQueryStringValue("room") !== "")
 	myroom = parseInt(getQueryStringValue("room"));
@@ -39,6 +38,44 @@ $(document).ready(function() {
 				bootbox.alert("No WebRTC support... ");
 				return;
 			}
+			var i = roomCapacity - 3;
+			while(i > 2){
+			    var rowElem = 3;
+			    var div = document.createElement('div');
+				div.className = 'row';
+				if(i > rowElem && rowElem > 0) {
+				    while(i > rowElem && rowElem > 0) {
+			            const subdiv1 = document.createElement('div');
+				        subdiv1.className = 'col-md-4';
+			            const subdiv2 = document.createElement('div');
+				        subdiv2.className = 'panel panel-default';
+			            const subdiv3_1 = document.createElement('div');
+				        subdiv3_1.className = 'panel-heading';
+				    
+				    	const h1 = document.createElement('h3');
+				        h1.className = 'panel-title';
+                        h1.innerHTML = 'Remote Video #'+(roomCapacity - i)+' <span class="label label-info hide" id="remote'+(roomCapacity - i)+'"></span>'
+
+			            const subdiv3_2 = document.createElement('div');
+				        subdiv3_2.className = 'panel-body relative';
+				    	subdiv3_2.id = 'videoremote'+ (roomCapacity - i);
+				    	
+				    	subdiv3_1.appendChild(h1);
+				    	subdiv2.appendChild(subdiv3_1);
+				    	subdiv2.appendChild(subdiv3_2);
+				    	subdiv1.appendChild(subdiv2);
+				    	div.appendChild(subdiv1);
+				    	
+				        --i;
+			            --rowElem;
+				    	console.log('insert', i);
+				    }
+				} else --i;
+				$('#videos').append(div);
+				console.log('append block', i);
+			}
+												$('#videojoin').removeClass('hide').show();
+									$('#registernow').removeClass('hide').show();
 			// Create session
 			janus = new Janus(
 				{
@@ -816,21 +853,22 @@ function subscribeTo(sources) {
 						'<span class="label label-info hide" id="curbitrate'+slot+'" style="position: absolute; bottom: 0px; right: 0px; margin: 15px;"></span>');
 					Janus.attachMediaStream($('#remotevideo' + slot + '-' + mid).get(0), stream);
 					// Note: we'll need this for additional videos too
-					if(!bitrateTimer[slot]) {
-						$('#curbitrate' + slot).removeClass('hide').show();
-						bitrateTimer[slot] = setInterval(function() {
-							if(!$("#videoremote" + slot + ' video').get(0))
-								return;
-							// Display updated bitrate, if supported
-							let bitrate = remoteFeed.getBitrate(mid);
-							$('#curbitrate' + slot).text(bitrate);
-							// Check if the resolution changed too
-							let width = $("#videoremote" + slot + ' video').get(0).videoWidth;
-							let height = $("#videoremote" + slot + ' video').get(0).videoHeight;
-							if(width > 0 && height > 0)
-								$('#curres' + slot).removeClass('hide').text(width+'x'+height).show();
-						}, 1000);
-					}
+					
+					// if(!bitrateTimer[slot]) {
+					// 	$('#curbitrate' + slot).removeClass('hide').show();
+					// 	bitrateTimer[slot] = setInterval(function() {
+					// 		if(!$("#videoremote" + slot + ' video').get(0))
+					// 			return;
+					// 		// Display updated bitrate, if supported
+					// 		let bitrate = remoteFeed.getBitrate(mid);
+					// 		$('#curbitrate' + slot).text(bitrate);
+					// 		// Check if the resolution changed too
+					// 		let width = $("#videoremote" + slot + ' video').get(0).videoWidth;
+					// 		let height = $("#videoremote" + slot + ' video').get(0).videoHeight;
+					// 		if(width > 0 && height > 0)
+					// 			$('#curres' + slot).removeClass('hide').text(width+'x'+height).show();
+					// 	}, 1000);
+					// }
 				}
 			},
 			oncleanup: function() {
