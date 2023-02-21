@@ -3,19 +3,20 @@ services:
   janus-gateway:
     image: 'janus-moe'
     command: ["/usr/local/bin/janus", "-F", "/usr/local/etc/janus"]
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8188:8188"
-      - "8088:8088"
-      - "8089:8089"
-      - "8889:8889"
-      - "8000:8000"
-      - "7088:7088"
-      - "7089:7089"
-      - "10000-10200/udp"
+    # ports:
+    #   - "80:80"
+    #   - "443:443"
+    #   - "8188:8188"
+    #   - "8088:8088"
+    #   - "8089:8089"
+    #   - "8889:8889"
+    #   - "8000:8000"
+    #   - "7088:7088"
+    #   - "7089:7089"
+    #   - "10000-10200/udp"
     volumes:
       - "./config:/usr/local/etc/janus"
       - "./sites-enabled:/etc/nginx/sites-enabled/"
       - "/etc/letsencrypt/:/etc/letsencrypt/"
+    network_mode: "host"
     restart: 'no'
