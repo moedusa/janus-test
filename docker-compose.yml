@@ -13,7 +13,7 @@ services:
       - "8000:8000"
       - "7088:7088"
       - "7089:7089"
-      - "20000-20500"
+      - "10000-10200/udp"
     volumes:
       - "./config:/usr/local/etc/janus"
       - "./sites-enabled:/etc/nginx/sites-enabled/"
