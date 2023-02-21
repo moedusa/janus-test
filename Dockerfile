@@ -170,6 +170,7 @@ VOLUME /etc/letsencrypt
 
 # RUN cd /usr/local/share/janus/demos && echo "var server = 'https://tytvse.site/janus';var iceServers = [{urls: 'stun:stun.l.google.com:19302'}];" >> settings.js
 COPY ./settings.js /usr/local/share/janus/demos/settings.js
+COPY ./mvideoroomtest.js /usr/local/share/janus/demos/mvideoroomtest.js
 
 STOPSIGNAL SIGTERM
 COPY run.sh /run.sh
